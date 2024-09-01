@@ -1,19 +1,15 @@
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>ENTER YOUR NAME:KARTHIKEYAN R</H3>
+<H3>ENTER YOUR REGISTER NO:212222240046</H3>
 <H3>EX. NO.1</H3>
-<H3>DATE</H3>
+<H3>DATE:</H3>
 <H1 ALIGN =CENTER> Introduction to Kaggle and Data preprocessing</H1>
-
 ## AIM:
-
 To perform Data preprocessing in a data set downloaded from Kaggle
-
 ## EQUIPMENTS REQUIRED:
 Hardware – PCs
 Anaconda – Python 3.7 Installation / Google Colab /Jupiter Notebook
 
 ## RELATED THEORETICAL CONCEPT:
-
 **Kaggle :**
 Kaggle, a subsidiary of Google LLC, is an online community of data scientists and machine learning practitioners. Kaggle allows users to find and publish data sets, explore and build models in a web-based data-science environment, work with other data scientists and machine learning engineers, and enter competitions to solve data science challenges.
 
@@ -37,8 +33,53 @@ STEP 5:Normalizing the data<BR>
 STEP 6:Splitting the data into test and train<BR>
 
 ##  PROGRAM:
-TYPE YOUR CODE HERE
+```
+***import libraries***
+from google.colab import files
+import pandas as pd
+import seaborn as sns
+import io
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from scipy import stats
+import numpy as np
 
+*** Read the dataset from drive ***
+df=pd.read_csv("/content/Churn_Modelling(1).csv")
+df
+
+x=df.iloc[:, :-1].values
+print(x)
+
+y=df.iloc[:, -1].values
+print(y)
+
+df.isnull().sum()
+
+*** Check the Duplicates ***
+df.duplicated()
+*** Check the Outliers***
+df.describe()
+
+non_numeric_cols = df.select_dtypes(exclude=['number']).columns
+df_encoded = pd.get_dummies(df, columns=non_numeric_cols)
+numeric_df = df_encoded.select_dtypes(include=['number'])
+
+df_encoded = pd.get_dummies(df, columns=df.select_dtypes(exclude=['number']).columns)
+numeric_df = df_encoded.select_dtypes(include=['number'])
+
+scaler = StandardScaler()
+df1 = pd.DataFrame(scaler.fit_transform(numeric_df), columns=numeric_df.columns) 
+df1
+
+#splitting the data for training & Testing
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
+print(x_train)
+print(len(x_train))
+print(x_test)
+print(len(x_test))
+```
 
 ## OUTPUT:
 SHOW YOUR OUTPUT HERE
